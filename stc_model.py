@@ -8,7 +8,7 @@ import tensorflow as tf
 from sklearn.cluster import KMeans
 from sklearn.model_selection import train_test_split
 from sklearn.utils import shuffle
-from tensorflow.keras.optimizers import SGD
+from tensorflow.python.keras.optimizers import SGD
 
 import metrics
 from data_loader import load_data
