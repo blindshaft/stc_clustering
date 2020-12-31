@@ -9,6 +9,8 @@ from sklearn.preprocessing import MinMaxScaler
 #%%
 data_path='data/stackoverflow/'
 # %%
+with open(data_path + 'label_StackOverflow.txt') as label_file:
+        y = np.array(list((map(int, label_file.readlines()))))
 with open(data_path + 'vocab_withIdx.dic', 'r') as inp_indx, \
             open(data_path + 'vocab_emb_Word2vec_48_index.dic', 'r') as inp_dic, \
             open(data_path + 'vocab_emb_Word2vec_48.vec') as inp_vec:
@@ -61,4 +63,11 @@ with open(data_path + 'title_StackOverflow.txt', 'r') as inp_txt:
                 all_vector_representation[i] = sent_rep / j
             else:
                 all_vector_representation[i] = sent_rep
+# %%
+svd = TruncatedSVD(n_components=1, random_state=1, n_iter=20)
+svd.fit(all_vector_representation)
+svd = svd.components_
+XX = all_vector_representation - all_vector_representation.dot(svd.transpose()) * svd
+scaler = MinMaxScaler()
+XX = scaler.fit_transform(XX)
 # %%
